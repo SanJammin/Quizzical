@@ -1,12 +1,22 @@
-# React + Vite
+# Links
+## Figma
+https://www.figma.com/design/83mUOB4emhAdQ5plLY2qld/Quizzical-App--Copy-?node-id=0-1&p=f&t=7m6NarFb9VjQ39HZ-0
+## OTDB API
+https://opentdb.com/api_config.php
+## Libray Decoders
+https://www.npmjs.com/package/he#hedecodehtml-options
+https://www.npmjs.com/package/html-entities#user-content-decodetext-options
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Requirements
+ - Two screens (start & questions)
+ - Pull 5 questions from the OTDB API
+ - Tally correct answers after "Check answers" is clicked
+ - Style & Polished
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Hints
+ - Use a library to decode the HTML Entities
+ - Create a new array with all answers. Randomly insert the correct_answer into the array with the incorrect_answers.
+    Use Google/ChatGPT for hhelp on how to shuffle items in an array at random or how to insert an item randomly into an array.
+ - Limit answer choice to 1 and style the selected answer: either (1) track the selected answer index inside of each question object,
+    OR (2) use an HTML form w/ radio inputs usin gthe same name attribute to automatically only allow one selection
+    (and check Google on how to style a radio input to look like a button).
