@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import he from "he";
+import clsx from "clsx";
 
 export default function QuizPage() {
     const [quizData, setQuizData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedAnswers, setSelectedAnswers] = useState({});
 
     useEffect(() => {
         setLoading(true);
@@ -19,6 +21,13 @@ export default function QuizPage() {
             })
     }, []);
 
+    function selectAnswer(question, index) {
+        setSelectedAnswers(prev => ({
+            ...prev,
+            [question]: index
+        }));
+    }
+
     const renderQuiz = quizData.map(quiz => {
         const allAnswers = [...quiz.incorrect_answers, quiz.correct_answer];
         const shuffleAnswers = allAnswers.sort(() => Math.random() - 0.5);
@@ -26,7 +35,14 @@ export default function QuizPage() {
         return (
             <section key={quiz.question}>
                 <h2>{he.decode(quiz.question)}</h2>
-                {shuffleAnswers.map(answer => <p key={answer}>{he.decode(answer)}</p>)}
+                {shuffleAnswers.map((answer, index) => (
+                    <button 
+                        key={answer}
+                        onClick={() => selectAnswer(quiz.question, index)}
+                        className={clsx({clicked: selectAnswer[quiz.question] === index})}>
+                        {he.decode(answer)}
+                    </button>
+                ))}
             </section>
         );
     });
