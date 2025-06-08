@@ -8,7 +8,7 @@ export default function QuizPage() {
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [quizComplete, setQuizComplete] = useState(false);
     const [score, setScore] = useState(0);
-    const [refreshTrigger, setRefreshTrigger] = useState(false);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     useEffect(() => {
         setLoading(true);
@@ -87,11 +87,11 @@ export default function QuizPage() {
 
     function playAgain() {
         setScore(0);
+        setSelectedAnswers({});
         setLoading(true);
         setQuizData([]);
         setQuizComplete(false);
-        setSelectedAnswers({});
-        setRefreshTrigger(prevState => !prevState);
+        setRefreshTrigger(prevState => prevState + 1);
     }
 
     return (
