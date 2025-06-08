@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import he from "he";
 
 export default function QuizPage() {
     const [quizData, setQuizData] = useState([]);
@@ -24,8 +25,8 @@ export default function QuizPage() {
 
         return (
             <section key={quiz.question}>
-                <h2>{quiz.question}</h2>
-                {shuffleAnswers.map(answer => <p key={answer}>{answer}</p>)}
+                <h2>{he.decode(quiz.question)}</h2>
+                {shuffleAnswers.map(answer => <p key={answer}>{he.decode(answer)}</p>)}
             </section>
         );
     });
