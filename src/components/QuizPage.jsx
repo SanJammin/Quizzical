@@ -12,7 +12,16 @@ export default function QuizPage() {
         fetch("https://opentdb.com/api.php?amount=5")
             .then(res => res.json())
             .then(data => {
-                setQuizData(data.results);
+                const processedQuizData = data.results.map(quiz => {
+                    const allAnswers = [...quiz.incorrect_answers, quiz.correct_answer];
+                    const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
+
+                    return {
+                        ...quiz,
+                        shuffledAnswers
+                    };
+                });
+                setQuizData(processedQuizData);
                 setLoading(false);
             })
             .catch(err => {
@@ -29,20 +38,20 @@ export default function QuizPage() {
     }
 
     const renderQuiz = quizData.map(quiz => {
-        const allAnswers = [...quiz.incorrect_answers, quiz.correct_answer];
-        const shuffleAnswers = allAnswers.sort(() => Math.random() - 0.5);
 
         return (
             <section key={quiz.question}>
                 <h2>{he.decode(quiz.question)}</h2>
-                {shuffleAnswers.map((answer, index) => (
-                    <button 
-                        key={answer}
-                        onClick={() => selectAnswer(quiz.question, index)}
-                        className={clsx({clicked: selectAnswer[quiz.question] === index})}>
-                        {he.decode(answer)}
-                    </button>
-                ))}
+                <div className="answer-container">
+                    {quiz.shuffledAnswers.map((answer, index) => (
+                        <button
+                            key={answer}
+                            onClick={() => selectAnswer(quiz.question, index)}
+                            className={clsx({clicked: selectedAnswers[quiz.question] === index})}>
+                            {he.decode(answer)}
+                        </button>
+                    ))}
+                </div>
             </section>
         );
     });

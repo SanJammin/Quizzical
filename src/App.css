@@ -62,3 +62,31 @@ main {
     font-family: "Inter", sans-serif;
     transition: background-color 0.3s ease;
 }
+
+h2 {
+    font-size: 1.5rem;
+    color: #293264;
+}
+
+.answer-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+button {
+    font-family: "Inter", sans-serif;
+    background-color: #F5F7FB;
+    border: 1px solid #4D5B9E;
+    color: #293264;
+    border-radius: 7.94px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.025);
+    padding: 0.25em 1em;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+button.clicked {
+    background-color: #D6DBF5;
+    color: #293264;
+}
