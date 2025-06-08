@@ -6,6 +6,9 @@ export default function QuizPage() {
     const [quizData, setQuizData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedAnswers, setSelectedAnswers] = useState({});
+    const [quizComplete, setQuizComplete] = useState(false);
+    const [score, setScore] = useState(0);
+    const [refreshTrigger, setRefreshTrigger] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -28,7 +31,7 @@ export default function QuizPage() {
                 console.error(err);
                 setLoading(false);
             })
-    }, []);
+    }, [refreshTrigger]);
 
     function selectAnswer(question, index) {
         setSelectedAnswers(prev => ({
@@ -47,7 +50,13 @@ export default function QuizPage() {
                         <button
                             key={answer}
                             onClick={() => selectAnswer(quiz.question, index)}
-                            className={clsx({clicked: selectedAnswers[quiz.question] === index})}>
+                            disabled={quizComplete}
+                            className={clsx({
+                                clicked: selectedAnswers[quiz.question] === index,
+                                correct: quizComplete && answer === quiz.correct_answer,
+                                wrong: quizComplete && selectedAnswers[quiz.question] === index && answer !== quiz.correct_answer,
+                                done: quizComplete && answer !== quiz.correct_answer
+                            })}>
                             {he.decode(answer)}
                         </button>
                     ))}
@@ -56,7 +65,41 @@ export default function QuizPage() {
         );
     });
 
+    function markQuiz() {
+        let finalNumber = 0;
+        quizData.forEach(quiz => {
+            const selectedIndex = selectedAnswers[quiz.question];
+            const selectedAnswer = quiz.shuffledAnswers[selectedIndex];
+            
+            if (selectedAnswer === quiz.correct_answer) {
+                finalNumber++;
+            }
+       });
+
+       setScore(finalNumber);
+       setQuizComplete(true);
+    }
+
+    const quizResults = <>
+        <p className="score">You scored {score}/5 correct answers</p>
+        <button className="check-answers" onClick={playAgain}>Play again</button>
+    </>
+
+    function playAgain() {
+        setScore(0);
+        setLoading(true);
+        setQuizData([]);
+        setQuizComplete(false);
+        setSelectedAnswers({});
+        setRefreshTrigger(prevState => !prevState);
+    }
+
     return (
-        <>{loading ? <p>Loading quiz...</p> : renderQuiz}</>
+        <section>
+            {loading ? <p>Loading quiz...</p> : renderQuiz}
+            <div className="button-holder">
+                {quizComplete ? quizResults : <button onClick={markQuiz} className="check-answers">Check answers</button>}
+            </div>
+        </section>
     );
 }

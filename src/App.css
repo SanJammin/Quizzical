@@ -72,6 +72,7 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
+    border-bottom: 1px solid #DBDEF0;
 }
 
 button {
@@ -89,4 +90,34 @@ button {
 button.clicked {
     background-color: #D6DBF5;
     color: #293264;
+}
+
+.button-holder {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+button.check-answers {
+    background-color: #4D5B9E;
+    color: #F5F7FB;
+    padding: 1em 2em;
+}
+
+button.correct {
+    background-color: #94D7A2;
+    border: none;
+}
+
+button.wrong {
+    background-color: #F8BCBC;
+    border: none;
+}
+
+button.done {
+    opacity: 0.5;
+}
+
+.score {
+    margin-right: 1em;
 }
