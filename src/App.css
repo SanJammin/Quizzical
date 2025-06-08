@@ -1,0 +1,6 @@
+body {
+    background-image: url(../public/yellow-blob.png), url(../public/blue-blob.png);
+    background-repeat: no-repeat;
+    background-position: top right, calc(-10vw) calc(80vh);
+    background-size: calc(15vw), calc(25vw);
+}
